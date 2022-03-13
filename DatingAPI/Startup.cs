@@ -36,6 +36,15 @@ namespace API
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"));
             });
 
+
+
+            //add this to allow angular app to access this API
+            services.AddCors(options =>{
+                options.AddDefaultPolicy(builder => {
+                    builder.WithOrigins("http://localhost:4200");
+                    });
+                    });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIv5", Version = "v1" });
@@ -55,6 +64,10 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+
+            //add this to allow angular app to access this API
+            app.UseCors();
 
             app.UseAuthorization();
 

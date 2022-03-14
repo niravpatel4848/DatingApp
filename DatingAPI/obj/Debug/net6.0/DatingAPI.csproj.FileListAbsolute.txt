@@ -59,3 +59,4 @@ N:\WEB DEVELOPMENT\DatingApp\DatingAPI\bin\Debug\net6.0\runtimes\win\lib\netstan
 N:\WEB DEVELOPMENT\DatingApp\DatingAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 N:\WEB DEVELOPMENT\DatingApp\DatingAPI\bin\Debug\net6.0\Humanizer.dll
 N:\WEB DEVELOPMENT\DatingApp\DatingAPI\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+N:\WEB DEVELOPMENT\DatingApp\DatingAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

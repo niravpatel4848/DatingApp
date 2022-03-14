@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using DatingAPI.Data;
+using DatingAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -36,7 +40,7 @@ namespace API
                 options.UseSqlServer(Configuration.GetConnectionString("ConnectionString"));
             });
 
-
+            services.AddScoped<ITokenService, TokenService>();
 
             //add this to allow angular app to access this API
             services.AddCors(options =>{
@@ -44,6 +48,17 @@ namespace API
                     builder.WithOrigins("http://localhost:4200");
                     });
                     });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters{
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new 
+                    SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -68,6 +83,8 @@ namespace API
 
             //add this to allow angular app to access this API
             app.UseCors();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
